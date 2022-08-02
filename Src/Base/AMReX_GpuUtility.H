@@ -154,8 +154,6 @@ namespace Gpu {
     {
 #if defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
         return ::isinf(m);
-#elif defined(__SYCL_DEVICE_ONLY__)
-        return sycl::isinf(m);
 #else
         return std::isinf(m);
 #endif

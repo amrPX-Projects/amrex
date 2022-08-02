@@ -45,8 +45,8 @@ using sycl::ceil;
 using sycl::copysign;
 using sycl::floor;
 using sycl::round;
-using sycl::isfinite;
-using sycl::isinf;
+using std::isfinite;
+using std::isinf;
 
 #else
 
