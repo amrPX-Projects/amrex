@@ -106,7 +106,7 @@ fab_to_fab (Vector<Array4CopyTag<T0, T1> > const& copy_tags, int scomp, int dcom
             } else {
                 if (sycl::any_of_group(item.get_sub_group(), msk > mypriority)) {
                     if (m) { *m = 0; } // yield
-                    sycl::atomic_fence(sycl::memory_order::acq_rel, sycl::memory_scope::device);
+                    item.mem_fence();
                     to_try = 1;
                 } else {
                     to_try = (msk > 0); // hold on to my lock
