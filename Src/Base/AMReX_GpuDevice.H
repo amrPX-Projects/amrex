@@ -97,7 +97,7 @@ public:
      */
     static void streamSynchronizeAll () noexcept;
 
-#if defined(__CUDACC__)
+#if defined(AMREX_USE_CUDA) && defined(__CUDACC__)
     /**  Generic graph selection. These should be called by users.  */
     static void startGraphRecording(bool first_iter, void* h_ptr, void* d_ptr, size_t sz);
     static cudaGraphExec_t stopGraphRecording(bool last_iter);

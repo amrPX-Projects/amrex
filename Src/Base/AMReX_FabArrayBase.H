@@ -504,7 +504,7 @@ public:
         Long         m_nuse;
         bool         m_multi_ghost = false;
         //
-#if defined(__CUDACC__)
+#if defined(AMREX_USE_CUDA) && defined(__CUDACC__)
         CudaGraph<CopyMemory> m_localCopy;
         CudaGraph<CopyMemory> m_copyToBuffer;
         CudaGraph<CopyMemory> m_copyFromBuffer;

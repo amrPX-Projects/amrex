@@ -85,7 +85,7 @@ std::unique_ptr<sycl::device>  Device::sycl_device;
 
 namespace {
 
-#if defined(__CUDACC__)
+#if defined(AMREX_USE_CUDA) && defined(__CUDACC__)
     AMREX_GPU_GLOBAL void emptyKernel() {}
 #endif
 
@@ -93,7 +93,7 @@ namespace {
     {
         amrex::ignore_unused(graph_size);
 
-#if defined(__CUDACC__)
+#if defined(AMREX_USE_CUDA) && defined(__CUDACC__)
 
         BL_PROFILE("InitGraph");
 
@@ -630,7 +630,7 @@ Device::streamSynchronizeAll () noexcept
 #endif
 }
 
-#if defined(__CUDACC__)
+#if defined(AMREX_USE_CUDA) && defined(__CUDACC__)
 
 void
 Device::startGraphRecording(bool first_iter, void* h_ptr, void* d_ptr, size_t sz)
