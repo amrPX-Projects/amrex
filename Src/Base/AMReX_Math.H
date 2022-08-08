@@ -11,6 +11,7 @@
 
 #ifdef AMREX_USE_SYCL
 #  include <sycl/sycl.hpp>
+namespace sycl { double abs (double); }
 #endif
 
 namespace amrex { inline namespace disabled {
