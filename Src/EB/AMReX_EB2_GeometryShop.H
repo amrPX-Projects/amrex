@@ -12,6 +12,8 @@
 #include <type_traits>
 #include <cmath>
 
+#include <nv/target>
+
 namespace amrex { namespace EB2 {
 
 template <class F, typename std::enable_if<IsGPUable<F>::value>::type* FOO = nullptr>
@@ -27,13 +29,14 @@ AMREX_GPU_HOST_DEVICE
 Real
 IF_f (F const& f, GpuArray<Real,AMREX_SPACEDIM> const& p) noexcept
 {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
     amrex::ignore_unused(f,p);
     amrex::Error("EB2::GeometryShop: how did this happen?");
     return 0.0;
-#else
+}
+if target (nv::target::is_host) {
     return f({AMREX_D_DECL(p[0],p[1],p[2])});
-#endif
+}
 }
 
 template <class F>

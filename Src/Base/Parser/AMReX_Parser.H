@@ -12,6 +12,8 @@
 #include <string>
 #include <set>
 
+#include <nv/target>
+
 namespace amrex {
 
 template <int N>
@@ -21,11 +23,12 @@ struct ParserExecutor
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     double operator() () const noexcept
     {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return parser_exe_eval(m_device_executor, nullptr);
-#else
+}
+if target (nv::target::is_host) {
         return parser_exe_eval(m_host_executor, nullptr);
-#endif
+}
     }
 
     template <typename... Ts>
@@ -34,11 +37,12 @@ struct ParserExecutor
     operator() (Ts... var) const noexcept
     {
         amrex::GpuArray<double,N> l_var{var...};
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return parser_exe_eval(m_device_executor, l_var.data());
-#else
+}
+if target (nv::target::is_host) {
         return parser_exe_eval(m_host_executor, l_var.data());
-#endif
+}
     }
 
     template <typename... Ts>
@@ -47,30 +51,33 @@ struct ParserExecutor
     operator() (Ts... var) const noexcept
     {
         amrex::GpuArray<double,N> l_var{var...};
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return static_cast<float>(parser_exe_eval(m_device_executor, l_var.data()));
-#else
+}
+if target (nv::target::is_host) {
         return static_cast<float>(parser_exe_eval(m_host_executor, l_var.data()));
-#endif
+}
     }
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     double operator() (GpuArray<double,N> const& var) const noexcept
     {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return parser_exe_eval(m_device_executor, var.data());
-#else
+}
+if target (nv::target::is_host) {
         return parser_exe_eval(m_host_executor, var.data());
-#endif
+}
     }
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     explicit operator bool () const {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return m_device_executor != nullptr;
-#else
+}
+if target (nv::target::is_host) {
         return m_host_executor != nullptr;
-#endif
+}
     }
 
     char* m_host_executor = nullptr;

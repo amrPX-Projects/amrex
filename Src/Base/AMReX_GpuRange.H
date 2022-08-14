@@ -8,6 +8,8 @@
 #include <AMReX_Box.H>
 #include <AMReX_TypeTraits.H>
 
+#include <nv/target>
+
 namespace amrex {
 
 template <typename T, typename std::enable_if<std::is_integral<T>::value,int>::type = 0>
@@ -32,18 +34,19 @@ Long at (T const& /*b*/, Long offset) noexcept { return offset; }
 AMREX_GPU_HOST_DEVICE
 AMREX_FORCE_INLINE Long size (Box const& b) noexcept
 {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
     return b.numPts();
-#else
+}
+if target (nv::target::is_host) {
     amrex::ignore_unused(b);
     return 1;
-#endif
+}
 }
 
 AMREX_GPU_HOST_DEVICE
 AMREX_FORCE_INLINE Box at (Box const& b, Long offset) noexcept
 {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
     auto len = b.length3d();
     Long k = offset / (len[0]*len[1]);
     Long j = (offset - k*(len[0]*len[1])) / len[0];
@@ -53,10 +56,11 @@ AMREX_FORCE_INLINE Box at (Box const& b, Long offset) noexcept
                             static_cast<int>(k))};
     iv += b.smallEnd();
     return Box(iv,iv,b.type());
-#else
+}
+if target (nv::target::is_host) {
     amrex::ignore_unused(offset);
     return b;
-#endif
+}
 }
 
 template <typename T>
@@ -92,13 +96,12 @@ struct range_impl
 
     AMREX_GPU_HOST_DEVICE
     iterator begin () const noexcept {
-#if defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
-        return iterator(m_b, blockDim.x*blockIdx.x+threadIdx.x, blockDim.x*gridDim.x);
-#elif defined (__SYCL_DEVICE_ONLY__)
+if target (nv::target::is_device) {
         return iterator(m_b, m_gid, m_grange);
-#else
+}
+if target (nv::target::is_host) {
         return iterator(m_b,0,1);
-#endif
+}
     }
 
     AMREX_GPU_HOST_DEVICE

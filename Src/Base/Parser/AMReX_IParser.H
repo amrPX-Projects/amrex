@@ -11,6 +11,8 @@
 #include <string>
 #include <set>
 
+#include <nv/target>
+
 namespace amrex {
 
 template <int N>
@@ -20,11 +22,12 @@ struct IParserExecutor
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     int operator() () const noexcept
     {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return iparser_exe_eval(m_device_executor, nullptr);
-#else
+}
+if target (nv::target::is_host) {
         return iparser_exe_eval(m_host_executor, nullptr);
-#endif
+}
     }
 
     template <typename... Ts>
@@ -33,30 +36,33 @@ struct IParserExecutor
     operator() (Ts... var) const noexcept
     {
         amrex::GpuArray<int,N> l_var{var...};
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return iparser_exe_eval(m_device_executor, l_var.data());
-#else
+}
+if target (nv::target::is_host) {
         return iparser_exe_eval(m_host_executor, l_var.data());
-#endif
+}
     }
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     int operator() (GpuArray<int,N> const& var) const noexcept
     {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return iparser_exe_eval(m_device_executor, var.data());
-#else
+}
+if target (nv::target::is_host) {
         return iparser_exe_eval(m_host_executor, var.data());
-#endif
+}
     }
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     explicit operator bool () const {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return m_device_executor != nullptr;
-#else
+}
+if target (nv::target::is_host) {
         return m_host_executor != nullptr;
-#endif
+}
     }
 
     char* m_host_executor = nullptr;

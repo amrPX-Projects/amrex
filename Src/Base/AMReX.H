@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 
+#include <nv/target>
+
 //
 // Initialize, Finalize, Error Reporting, and Version String Functions
 
@@ -107,16 +109,17 @@ namespace amrex
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     void Error (const char* msg = 0) {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
 #if defined(NDEBUG)
         amrex::ignore_unused(msg);
 #else
         if (msg) AMREX_DEVICE_PRINTF("Error %s\n", msg);
         AMREX_DEVICE_ASSERT(0);
 #endif
-#else
+}
+if target (nv::target::is_host) {
         Error_host(msg);
-#endif
+}
     }
 
     //! Print out warning message to cerr.
@@ -126,15 +129,16 @@ namespace amrex
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     void Warning (const char * msg) {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
 #if defined(NDEBUG)
         amrex::ignore_unused(msg);
 #else
         if (msg) AMREX_DEVICE_PRINTF("Warning %s\n", msg);
 #endif
-#else
+}
+if target (nv::target::is_host) {
         Warning_host(msg);
-#endif
+}
     }
 
     //! Print out message to cerr and exit via abort().
@@ -144,16 +148,17 @@ namespace amrex
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     void Abort (const char * msg = 0) {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
 #if defined(NDEBUG)
         amrex::ignore_unused(msg);
 #else
         if (msg) AMREX_DEVICE_PRINTF("Abort %s\n", msg);
         AMREX_DEVICE_ASSERT(0);
 #endif
-#else
+}
+if target (nv::target::is_host) {
         Abort_host(msg);
-#endif
+}
     }
 
     /**
@@ -166,7 +171,7 @@ namespace amrex
 
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     void Assert (const char* EX, const char* file, int line, const char* msg = nullptr) {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
 #if defined(NDEBUG)
         amrex::ignore_unused(EX,file,line,msg);
 #else
@@ -179,9 +184,10 @@ namespace amrex
         }
         AMREX_DEVICE_ASSERT(0);
 #endif
-#else
+}
+if target (nv::target::is_host) {
         Assert_host(EX,file,line,msg);
-#endif
+}
     }
 
     /**

@@ -15,6 +15,8 @@
 #include <cmath>
 #include <cstring>
 
+#include <nv/target>
+
 #ifdef AMREX_USE_CUDA
 #include <cuda.h>
 #include <curand_kernel.h>   // Is this needed here?
@@ -139,24 +141,19 @@ namespace Gpu {
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     bool isnan (T m) noexcept
     {
-#if defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
-        return ::isnan(m);
-#elif defined(__SYCL_DEVICE_ONLY__)
+if target (nv::target::is_device) {
         return sycl::isnan(m);
-#else
+}
+if target (nv::target::is_host) {
         return std::isnan(m);
-#endif
+}
     }
 
     template <class T>
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     bool isinf (T m) noexcept
     {
-#if defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
-        return ::isinf(m);
-#else
         return std::isinf(m);
-#endif
     }
 
     struct StreamItInfo

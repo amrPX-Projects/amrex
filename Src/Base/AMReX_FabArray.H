@@ -48,6 +48,8 @@
 #include <set>
 #include <string>
 
+#include <nv/target>
+
 namespace amrex {
 
 template <typename T, typename std::enable_if<!IsBaseFab<T>::value,int>::type = 0>
@@ -196,11 +198,12 @@ struct MultiArray4
 {
     AMREX_GPU_HOST_DEVICE AMREX_FORCE_INLINE
     Array4<T> const& operator[] (int li) const noexcept {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         return dp[li];
-#else
+}
+if target (nv::target::is_host) {
         return hp[li];
-#endif
+}
     }
 
 #ifdef AMREX_USE_GPU

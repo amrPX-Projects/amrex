@@ -25,6 +25,8 @@
 #include <algorithm>
 #include <utility>
 
+#include <nv/target>
+
 #define AMREX_GPU_NCELLS_PER_THREAD 3
 #define AMREX_GPU_Y_STRIDE 1
 #define AMREX_GPU_Z_STRIDE 1
@@ -103,7 +105,7 @@ namespace Gpu {
     inline
     Box getThreadBox (const Box& bx, Long offset) noexcept
     {
-#if AMREX_DEVICE_COMPILE
+if target (nv::target::is_device) {
         const auto len = bx.length3d();
         Long k = offset / (len[0]*len[1]);
         Long j = (offset - k*(len[0]*len[1])) / len[0];
@@ -113,10 +115,11 @@ namespace Gpu {
                                 static_cast<int>(k))};
         iv += bx.smallEnd();
         return (bx & Box(iv,iv,bx.type()));
-#else
+}
+if target (nv::target::is_host) {
         amrex::ignore_unused(offset);
         return bx;
-#endif
+}
     }
 
 // ************************************************
