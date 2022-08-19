@@ -33,7 +33,7 @@ contains
 
     integer, intent(in), value :: acc_stream_in
 
-    ! Set the OpenACC stream (to be used with the async clause) to be consistente
+    ! Set the OpenACC stream (to be used with the async clause) to be consistent
     ! with the CUDA stream that AMReX is using.
 
     acc_stream = acc_stream_in

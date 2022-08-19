@@ -392,8 +392,8 @@ amrex::Initialize (int& argc, char**& argv, bool build_parm_parse,
             else
             {
                 // This counts command line arguments before a "--"
-                // and only sends the preceeding arguments to ParmParse;
-                // the rest get ingored.
+                // and only sends the preceding arguments to ParmParse;
+                // the rest get ignored.
                 int ppargc = 1;
                 for (; ppargc < argc; ++ppargc) {
                     if (strcmp(argv[ppargc], "--") == 0) break;

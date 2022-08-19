@@ -664,7 +664,7 @@ bldTable (const char*&                    str,
         case pOpenBracket:
             if ( cur_name.empty() )
             {
-                amrex::Abort("ParmParse::bldTabe() '{' with no blocknamne");
+                amrex::Abort("ParmParse::bldTable() '{' with no blockname");
             }
             if ( !cur_list.empty() )
             {

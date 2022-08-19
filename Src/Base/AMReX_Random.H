@@ -12,7 +12,7 @@
 namespace amrex
 {
     /**
-    * \brief Generate a psuedo-random double from uniform distribution
+    * \brief Generate a pseudorandom double from a uniform distribution
     *
     *  Generates one pseudorandom real number (double) from a uniform
     *  distribution between 0.0 and 1.0 (0.0 included, 1.0 excluded)
@@ -45,7 +45,7 @@ namespace amrex
     }
 
     /**
-    * \brief Generate a psuedo-random double from a normal distribution
+    * \brief Generate a pseudorandom double from a normal distribution
     *
     *  Generates one pseudorandom real number (double) from a normal
     *  distribution with mean 'mean' and standard deviation 'stddev'.
@@ -78,7 +78,7 @@ namespace amrex
     }
 
     /**
-    * \brief Generate a psuedo-random integer from a Poisson distribution
+    * \brief Generate a pseudorandom integer from a Poisson distribution
     *
     *  Generates one pseudorandom positive integer number (double)
     *  extracted from a Poisson distribution, given the Real parameter lambda.

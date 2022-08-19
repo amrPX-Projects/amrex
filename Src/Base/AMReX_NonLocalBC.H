@@ -57,7 +57,7 @@ struct MultiBlockIndexMapping {
         return {iv_new[0], iv_new[1], iv_new[2]};
     }
 
-    //! \brief The inverse function is given by rearringing all above terms.
+    //! \brief The inverse function is given by rearranging all above terms.
     //!
     //! \param[in] i  The index that lives in the source space.
     //!
@@ -91,7 +91,7 @@ struct MultiBlockIndexMapping {
 //! This is used to map indices from the dest index space into the source index space.
 //!
 //! IntVect is being embedded in Dim3 by trailing zeros.
-//! Dim3 is being projected to IntVect by dopping z for AMREX_SPACEDIM = 2 or z and y components
+//! Dim3 is being projected to IntVect by dropping z for AMREX_SPACEDIM = 2 or z and y components
 //! for AMREX_SPACEDIM = 1.
 //!
 //! \param[in] iv The IntVect that lives in the destination index space.
@@ -147,12 +147,12 @@ Image(DTOS dtos, const Box& box)
     return srcbox;
 }
 
-//! \brief Applies the Dim3 to Dim3 invserse mapping onto IntVects.
+//! \brief Applies the Dim3 to Dim3 inverse mapping onto IntVects.
 //!
 //! This is used to map indices from the src index space into the dest index space.
 //!
 //! IntVect is being embedded in Dim3 by trailing zeros.
-//! Dim3 is being projected to IntVect by dopping z for AMREX_SPACEDIM = 2 or z and y components
+//! Dim3 is being projected to IntVect by dropping z for AMREX_SPACEDIM = 2 or z and y components
 //! for AMREX_SPACEDIM = 1.
 //!
 //! \param[in] iv The IntVect that lives in the src index space.
@@ -206,7 +206,7 @@ static_assert(IsIndexMapping<MultiBlockIndexMapping>(),
 //! \brief This class stores data dependencies for an inter-block communication.
 //!
 //! In communication between two blocks one might need to do an index
-//! transformation from one block to antoher.
+//! transformation from one block to another.
 struct MultiBlockCommMetaData : FabArrayBase::CommMetaData {
     //! \name Constructors
 
@@ -264,7 +264,7 @@ struct MultiBlockCommMetaData : FabArrayBase::CommMetaData {
 //                                                           [concept.FabProjection]
 //
 
-//! \brief This type trait tests if a type P is a projetion for FAB.
+//! \brief This type trait tests if a type P is a projection for FAB.
 template <typename P, typename FAB>
 struct IsFabProjection
     : IsCallableR<typename FAB::value_type, P, Array4<const typename FAB::value_type>, Dim3, int>
@@ -438,7 +438,7 @@ struct CommData {
 void PrepareCommBuffers(CommData& comm, const FabArrayBase::MapOfCopyComTagContainers& cctc,
                         int n_components, std::size_t object_size, std::size_t align);
 
-//! \brief Initiate all recvieves with MPI_Irecv calls associated with tag mpi_tag.
+//! \brief Initiate all receives with MPI_Irecv calls associated with tag mpi_tag.
 void PostRecvs(CommData& comm, int mpi_tag);
 
 //! \brief Initiate all sends with MPI_Isend calls associated with tag mpi_tag.

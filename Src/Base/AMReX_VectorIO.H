@@ -26,7 +26,7 @@ namespace amrex {
     //! to read into, the size of that buffer, the istream, and an IntDescriptor
     //! that describes the format of the data on disk.
     //! The buffer is assumed to be large enough to store 'size' integers, and it is
-    //! the user's reponsiblity to allocate this data.
+    //! the user's responsibility to allocate this data.
     void readIntData (int* data, std::size_t size, std::istream& is, const IntDescriptor& id);
 
     //! Write long data to the ostream. The arguments are a pointer to data
@@ -41,7 +41,7 @@ namespace amrex {
     //! to read into, the size of that buffer, the istream, and an IntDescriptor
     //! that describes the format of the data on disk.
     //! The buffer is assumed to be large enough to store 'size' longs, and it is
-    //! the user's reponsiblity to allocate this data.
+    //! the user's responsibility to allocate this data.
     void readLongData (Long* data, std::size_t size, std::istream& is, const IntDescriptor& id);
 
     //! Write Real data to the ostream. The arguments are a pointer to data
@@ -56,7 +56,7 @@ namespace amrex {
     //! to read into, the size of that buffer, the istream, and a RealDescriptor
     //! that describes the format of the data on disk.
     //! The buffer is assumed to be large enough to store 'size' Reals, and it is
-    //! the user's reponsiblity to allocate this data.
+    //! the user's responsibility to allocate this data.
     void readRealData (Real* data, std::size_t size, std::istream& is,
                        const RealDescriptor& rd);
 
@@ -72,7 +72,7 @@ namespace amrex {
     //! to read into, the size of that buffer, the istream, and a RealDescriptor
     //! that describes the format of the data on disk.
     //! The buffer is assumed to be large enough to store 'size' Reals, and it is
-    //! the user's reponsiblity to allocate this data.
+    //! the user's responsibility to allocate this data.
     void readFloatData(float* data, std::size_t size, std::istream& is,
                        const RealDescriptor& rd);
 
@@ -88,7 +88,7 @@ namespace amrex {
     //! to read into, the size of that buffer, the istream, and a RealDescriptor
     //! that describes the format of the data on disk.
     //! The buffer is assumed to be large enough to store 'size' Reals, and it is
-    //! the user's reponsiblity to allocate this data.
+    //! the user's responsibility to allocate this data.
     void readDoubleData (double* data, std::size_t size, std::istream& is,
                          const RealDescriptor& rd);
 

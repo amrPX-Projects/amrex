@@ -209,7 +209,7 @@ class IntVect;
 *  The query functions search the table for definition names that match a given
 *  string (and prefix) and return values from the corresponding value list.
 *  The values can be returned as ints, Vector\<int\>s, floats, Vector\<float\>s,
-*  doubles, Vector\<double\>s, std::strings, or Vector\<aSring\>s.  All values in the
+*  doubles, Vector\<double\>s, std::strings, or Vector\<String\>s.  All values in the
 *  table are stored as std::string objects, but if an int, float, or double is
 *  requested, the translation is done automatically.  In the previous example,
 *  the value of niter could be returned as either an std::string, an int, a double,
@@ -310,7 +310,7 @@ public:
     * ival'th value does not exist, or if the printed representation
     * of the value cannot be converted to an bool, an error message is
     * output and the program halts.   Note that ival == 0 is the first
-    * value in the list.  ParmParse converte the value 'true', and non-zero
+    * value in the list.  ParmParse converts the value 'true', and non-zero
     * integers or floats to bool(true), and bool(false) for 'false'
     * or zero integer or float values.
     */

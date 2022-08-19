@@ -435,7 +435,7 @@ public:
     void clear ();
 
     /**
-    * \brief Return owenership of fabs. The concept of ownership only applies when UPC++
+    * \brief Return ownership of fabs. The concept of ownership only applies when UPC++
     * team is used. In that case, each fab is shared by team workers, with one
     * taking the ownership.
     */

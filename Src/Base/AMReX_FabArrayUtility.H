@@ -871,7 +871,7 @@ ReduceLogicalAnd_host_wrapper (FabArray<FAB1> const& fa1, FabArray<FAB2> const& 
                                IntVect const& nghost, F&& f)
 {
     amrex::ignore_unused(fa1,fa2,nghost,f);
-    amrex::Abort("ReduceLogicalAnd: Luanch Region is off. Device lambda cannot be called by host.");
+    amrex::Abort("ReduceLogicalAnd: Launch Region is off. Device lambda cannot be called by host.");
     return false;
 }
 }
@@ -1018,7 +1018,7 @@ ReduceLogicalOr_host_wrapper (FabArray<FAB1> const& fa1, FabArray<FAB2> const& f
                               IntVect const& nghost, F&& f)
 {
     amrex::ignore_unused(fa1,fa2,nghost,f);
-    amrex::Abort("ReeuceLogicalOr: Launch Region is off. Device lambda cannot be called by host.");
+    amrex::Abort("ReduceLogicalOr: Launch Region is off. Device lambda cannot be called by host.");
     return false;
 }
 }

@@ -225,13 +225,13 @@ namespace amrex
                 if (data[hash] == sentinel) {
                     std::swap(data[hash], data[i]);
                     // after swap, new data[i] holds sentinel
-                    //   newdata[hash] in correct hash poitiion
+                    //   newdata[hash] in correct hash position
                     ++i;
                     continue;
                 }
 
                 std::size_t const hashhash = hasher(data[hash]) % N;
-                if (hashhash != hash) { // data[hash] not in correct has poision, thus will yield it's position
+                if (hashhash != hash) { // data[hash] not in correct hash position, thus will yield it's position
                     std::swap(data[i], data[hash]);
                     // after swap, new data[hash] in correct hash position
                     //   new data[i] not sure

@@ -4,7 +4,7 @@
 
 ! -----------------------------------------------------------
 !> This routine is intended to be a generic fill function
-!! for cell centered data.  It knows how to exrapolate,
+!! for cell centered data.  It knows how to extrapolate,
 !! and reflect data and can be used to supplement problem
 !! specific fill functions (ie. EXT_DIR).
 !!
