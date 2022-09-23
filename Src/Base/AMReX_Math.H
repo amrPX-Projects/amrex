@@ -72,7 +72,7 @@ double cospi (double x)
 {
 #if defined(AMREX_USE_DPCPP)
     return sycl::cospi(x);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     return ::cospi(x);
 #else
     return std::cos(pi<double>()*x);
@@ -85,7 +85,7 @@ float cospi (float x)
 {
 #if defined(AMREX_USE_DPCPP)
     return sycl::cospi(x);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     return ::cospif(x);
 #else
     return std::cos(pi<float>()*x);
@@ -98,7 +98,7 @@ double sinpi (double x)
 {
 #if defined(AMREX_USE_DPCPP)
     return sycl::sinpi(x);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     return ::sinpi(x);
 #else
     return std::sin(pi<double>()*x);
@@ -111,7 +111,7 @@ float sinpi (float x)
 {
 #if defined(AMREX_USE_DPCPP)
     return sycl::sinpi(x);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     return ::sinpif(x);
 #else
     return std::sin(pi<float>()*x);
@@ -125,7 +125,7 @@ std::pair<double,double> sincos (double x)
     std::pair<double,double> r;
 #if defined(AMREX_USE_DPCPP)
     r.first = sycl::sincos(x, &r.second);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__) || defined(_GNU_SOURCE)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__) || defined(_GNU_SOURCE)
     ::sincos(x, &r.first, &r.second);
 #else
     r.first  = std::sin(x);
@@ -141,7 +141,7 @@ std::pair<float,float> sincos (float x)
     std::pair<float,float> r;
 #if defined(AMREX_USE_DPCPP)
     r.first = sycl::sincos(x, &r.second);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__) || defined(_GNU_SOURCE)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__) || defined(_GNU_SOURCE)
     ::sincosf(x, &r.first, &r.second);
 #else
     r.first  = std::sin(x);
@@ -157,7 +157,7 @@ std::pair<double,double> sincospi (double x)
     std::pair<double,double> r;
 #if defined(AMREX_USE_DPCPP)
     r.first = sycl::sincos(pi<double>()*x, &r.second);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     ::sincospi(x, &r.first, &r.second);
 #else
     r.first  = std::sin(pi<double>()*x);
@@ -173,7 +173,7 @@ std::pair<float,float> sincospi (float x)
     std::pair<float,float> r;
 #if defined(AMREX_USE_DPCPP)
     r.first = sycl::sincos(pi<float>()*x, &r.second);
-#elif defined(__CUDA_ARCH__) || defined(__HIP_DEVICE_COMPILE__)
+#elif defined(__CUDA_ARCH__) && defined(AMREX_USE_CUDA) || defined(__HIP_DEVICE_COMPILE__)
     ::sincospif(x, &r.first, &r.second);
 #else
     r.first  = std::sin(pi<float>()*x);
