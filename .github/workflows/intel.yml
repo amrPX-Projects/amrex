@@ -101,17 +101,21 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CODEPLAYTOKEN: ${{ secrets.CODEPLAYTOKEN }}
+      GH_TOKEN: ${{ github.token }}
     steps:
     - uses: actions/checkout@v3
+    - name: Early exit
+      if: ${{ env.CODEPLAYTOKEN == '' }}
+      run: |
+        gh run cancel ${{ github.run_id }}
+        gh run watch ${{ github.run_id }}
     - name: Dependencies
-      if: ${{ env.CODEPLAYTOKEN != '' }}
       run: |
         .github/workflows/dependencies/dependencies_nvcc12.sh
         .github/workflows/dependencies/dependencies_dpcpp.sh
         .github/workflows/dependencies/dependencies_codeplay.sh ${{ env.CODEPLAYTOKEN }}
         .github/workflows/dependencies/dependencies_ccache.sh
     - name: Set Up Cache
-      if: ${{ env.CODEPLAYTOKEN != '' }}
       uses: actions/cache@v3
       with:
         path: ~/.cache/ccache
@@ -119,7 +123,6 @@ jobs:
         restore-keys: |
              ccache-${{ github.workflow }}-${{ github.job }}-git-
     - name: Build & Install
-      if: ${{ env.CODEPLAYTOKEN != '' }}
       # mkl/rng/device/detail/mrg32k3a_impl.hpp has a number of sign-compare error
       # mkl/rng/device/detail/mrg32k3a_impl.hpp has missing braces in array-array initalization
       # clang currently supports CUDA up to version 11.5 and a warning is issued with newer versions
