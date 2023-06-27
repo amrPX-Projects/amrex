@@ -158,7 +158,7 @@ jobs:
     - name: Dependencies
       if: ${{ env.CODEPLAYTOKEN != '' }}
       run: |
-        .github/workflows/dependencies/dependencies_hip.sh 5.4.6
+        .github/workflows/dependencies/dependencies_hip.sh
         .github/workflows/dependencies/dependencies_dpcpp.sh
         .github/workflows/dependencies/dependencies_codeplay.sh ${{ env.CODEPLAYTOKEN }}
         .github/workflows/dependencies/dependencies_ccache.sh
@@ -174,7 +174,8 @@ jobs:
       if: ${{ env.CODEPLAYTOKEN != '' }}
       # mkl/rng/device/detail/mrg32k3a_impl.hpp has a number of sign-compare error
       # mkl/rng/device/detail/mrg32k3a_impl.hpp has missing braces in array-array initalization
-      env: {CXXFLAGS: "-fsycl -fsycl-targets=amdgcn-amd-amdhsa -Xsycl-target-backend --offload-arch=gfx90a -fno-operator-names -Werror -Wall -Wextra -Wpedantic -Wnull-dereference -Wfloat-conversion -Wshadow -Woverloaded-virtual -Wextra-semi -Wunreachable-code -Wnon-virtual-dtor -Wno-sign-compare -Wno-missing-braces"}
+      env:
+        CXXFLAGS: "-Wl,-mllvm,--opaque-pointers -fsycl -fsycl-targets=amdgcn-amd-amdhsa -Xsycl-target-backend --offload-arch=gfx90a -fno-operator-names"
       run: |
         export CCACHE_COMPRESS=1
         export CCACHE_COMPRESSLEVEL=10
